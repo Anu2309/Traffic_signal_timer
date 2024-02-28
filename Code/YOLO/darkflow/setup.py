@@ -5,8 +5,10 @@ import numpy
 import os
 import importlib.util
 
-VERSION = imp.load_source('version', os.path.join('.', 'darkflow', 'version.py'))
-VERSION = VERSION.__version__
+spec = importlib.util.spec_from_file_location("version", os.path.join('.', 'darkflow', 'version.py'))
+version_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(version_module)
+VERSION = version_module.__version__
 
 if os.name =='nt' :
     ext_modules=[
